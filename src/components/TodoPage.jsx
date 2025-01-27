@@ -10,6 +10,7 @@ const TaskList = () => {
     title: "",
     description: "",
     priority: "Low",
+    status: "pending", // Default status
   });
   const [editingTask, setEditingTask] = useState(null);
 
@@ -37,17 +38,18 @@ const TaskList = () => {
     }
 
     await createTask(newTask);
-    setNewTask({ title: "", description: "", priority: "Low" });
+    setNewTask({
+      title: "",
+      description: "",
+      priority: "Low",
+      status: "pending",
+    });
     fetchTasks(filters);
   };
 
   // Handle updating a task
   const handleEditTask = async (e) => {
     e.preventDefault();
-
-    if (!editingTask.title.trim() || !editingTask.description.trim()) {
-      return alert("Title and description are required!");
-    }
 
     await updateTask(editingTask._id, editingTask);
     setEditingTask(null);
@@ -99,33 +101,54 @@ const TaskList = () => {
 
       {/* Add Task Form */}
       <form onSubmit={handleAddTask} className="form">
-        <input
-          type="text"
-          name="title"
-          placeholder="Task Title"
-          value={newTask.title}
-          onChange={handleInputChange}
-          className="input"
-          required
-        />
-        <textarea
-          name="description"
-          placeholder="Task Description"
-          value={newTask.description}
-          onChange={handleInputChange}
-          className="textarea"
-          required
-        />
-        <select
-          name="priority"
-          value={newTask.priority}
-          onChange={handleInputChange}
-          className="select"
-        >
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
+        <label>
+          Title:
+          <input
+            type="text"
+            name="title"
+            placeholder="Task Title"
+            value={newTask.title}
+            onChange={handleInputChange}
+            className="input"
+            required
+          />
+        </label>
+        <label>
+          Description:
+          <textarea
+            name="description"
+            placeholder="Task Description"
+            value={newTask.description}
+            onChange={handleInputChange}
+            className="textarea"
+            required
+          />
+        </label>
+        <label>
+          Priority:
+          <select
+            name="priority"
+            value={newTask.priority}
+            onChange={handleInputChange}
+            className="select"
+          >
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </label>
+        <label>
+          Status:
+          <select
+            name="status"
+            value={newTask.status}
+            onChange={handleInputChange}
+            className="select"
+          >
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+          </select>
+        </label>
         <button type="submit" className="button add-button">
           Add Task
         </button>
@@ -140,7 +163,7 @@ const TaskList = () => {
             <li key={task._id} className="task-item">
               <div className="task-details">
                 <strong>{task.title}</strong> - {task.description} (
-                {task.priority})
+                {task.priority}, {task.status})
               </div>
               <div className="task-actions">
                 <button
@@ -169,33 +192,54 @@ const TaskList = () => {
         <div className="modal">
           <form onSubmit={handleEditTask} className="modal-form">
             <h3>Edit Task</h3>
-            <input
-              type="text"
-              name="title"
-              placeholder="Task Title"
-              value={editingTask.title}
-              onChange={handleInputChange}
-              className="input"
-              required
-            />
-            <textarea
-              name="description"
-              placeholder="Task Description"
-              value={editingTask.description}
-              onChange={handleInputChange}
-              className="textarea"
-              required
-            />
-            <select
-              name="priority"
-              value={editingTask.priority}
-              onChange={handleInputChange}
-              className="select"
-            >
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-            </select>
+            <label>
+              Title:
+              <input
+                type="text"
+                name="title"
+                placeholder="Task Title"
+                value={editingTask.title}
+                onChange={handleInputChange}
+                className="input"
+                required
+              />
+            </label>
+            <label>
+              Description:
+              <textarea
+                name="description"
+                placeholder="Task Description"
+                value={editingTask.description}
+                onChange={handleInputChange}
+                className="textarea"
+                required
+              />
+            </label>
+            <label>
+              Priority:
+              <select
+                name="priority"
+                value={editingTask.priority}
+                onChange={handleInputChange}
+                className="select"
+              >
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </label>
+            <label>
+              Status:
+              <select
+                name="status"
+                value={editingTask.status}
+                onChange={handleInputChange}
+                className="select"
+              >
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+              </select>
+            </label>
             <div>
               <button type="submit" className="button save-button">
                 Save Changes

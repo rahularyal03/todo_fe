@@ -6,13 +6,28 @@ const useTaskStore = create((set) => ({
   loading: false,
   error: null,
 
-  fetchTasks: async () => {
+  fetchTasks: async (filters) => {
     set({ loading: true });
+    console.log("Filters:", filters);
     try {
-      const response = await fetch(`https://todo-be-rouge.vercel.app/todo`);
+      // Construct the query string based on the filters object
+      let queryString = "?";
+      if (filters.status) queryString += `status=${filters.status}&`;
+      if (filters.priority) queryString += `priority=${filters.priority}&`;
+
+      // Remove the trailing '&' if there is one
+      queryString = queryString.endsWith("&")
+        ? queryString.slice(0, -1)
+        : queryString;
+
+      // Fetch tasks with the query parameters
+      const response = await fetch(
+        `https://todo-be-rouge.vercel.app/todo${queryString}`
+      );
       console.log(response);
       const data = await response.json();
       console.log(data.data);
+
       set({ tasks: data.data, loading: false });
     } catch (error) {
       set({ error: error.message, loading: false });
@@ -77,7 +92,7 @@ const useTaskStore = create((set) => ({
         tasks: state.tasks.filter((task) => task.id !== taskId),
         loading: false,
       }));
-      toast.success("Deleted Successfully");
+      toast.success("Deleted");
     } catch (error) {
       set({ error: error.message, loading: false });
       toast.error(error.message);
