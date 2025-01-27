@@ -29,7 +29,7 @@
   .input,
   .textarea,
   .select {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     margin-bottom: 10px;
   }
@@ -92,11 +92,80 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000; /* Ensure the modal is on top */
   }
+  
+  /* Modal Form */
   .modal-form {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    width: 400px;
+    width: 100%;
+    max-width: 500px; /* Limit the width on larger screens */
+    min-width: 300px; /* Ensure a minimum width on smaller screens */
+    box-sizing: border-box;
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (max-width: 768px) {
+    .task-container {
+      max-width: 90%; /* Allow container to be more flexible on smaller screens */
+      padding: 10px;
+    }
+  
+    .filter-section {
+      flex-direction: column;
+      gap: 10px; /* Stack filter items vertically on mobile */
+    }
+  
+    .task-actions {
+      flex-direction: column;
+    }
+  
+    .task-item {
+      flex-direction: column; /* Stack task details vertically */
+      align-items: flex-start;
+    }
+  
+    .modal-form {
+      padding: 15px; /* Less padding on small screens */
+      max-width: 100%; /* Make the modal take more width on smaller screens */
+    }
+  
+    .modal h3 {
+      font-size: 1.2rem; /* Slightly smaller font size for headings */
+    }
+  
+    .modal label,
+    .modal input,
+    .modal select,
+    .modal textarea {
+      font-size: 1rem; /* Adjust font size for smaller devices */
+    }
+  
+    .button {
+      width: 100%; /* Full-width buttons on small screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .modal-form {
+      width: 90%; /* Further shrink modal width on very small screens */
+    }
+  
+    .modal h3 {
+      font-size: 1rem; /* Smaller font for titles on very small screens */
+    }
+  
+    .modal label,
+    .modal input,
+    .modal select,
+    .modal textarea {
+      font-size: 0.9rem; /* Slightly smaller font size */
+    }
+  
+    .button {
+      padding: 10px; /* Smaller padding for buttons on small screens */
+    }
   }
   

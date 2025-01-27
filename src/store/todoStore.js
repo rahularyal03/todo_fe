@@ -72,7 +72,7 @@ const useTaskStore = create((set) => ({
         ),
         loading: false,
       }));
-      toast.success(updatedTask.message);
+      toast.success("List updated Successfully");
     } catch (error) {
       toast.error(error.message);
       set({ error: error.message, loading: false });
