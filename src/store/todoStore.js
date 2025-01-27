@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { create } from "zustand";
 
 const useTaskStore = create((set) => ({
@@ -29,12 +30,13 @@ const useTaskStore = create((set) => ({
         body: JSON.stringify(taskData),
       });
       const newTask = await response.json();
-      console.log(newTask);
       set((state) => ({
         tasks: [...state.tasks, newTask],
         loading: false,
       }));
+      toast.success(newTask.message);
     } catch (error) {
+      toast.error(error.message);
       set({ error: error.message, loading: false });
     }
   },
@@ -55,7 +57,9 @@ const useTaskStore = create((set) => ({
         ),
         loading: false,
       }));
+      toast.success(updatedTask.message);
     } catch (error) {
+      toast.error(error.message);
       set({ error: error.message, loading: false });
     }
   },
@@ -73,8 +77,10 @@ const useTaskStore = create((set) => ({
         tasks: state.tasks.filter((task) => task.id !== taskId),
         loading: false,
       }));
+      toast.success("Deleted Successfully");
     } catch (error) {
       set({ error: error.message, loading: false });
+      toast.error(error.message);
     }
   },
 }));
