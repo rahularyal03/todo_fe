@@ -8,7 +8,7 @@ const useTaskStore = create((set) => ({
   fetchTasks: async () => {
     set({ loading: true });
     try {
-      const response = await fetch(`http://localhost:4000/todo`);
+      const response = await fetch(`https://todo-be-rouge.vercel.app/todo`);
       console.log(response);
       const data = await response.json();
       console.log(data.data);
@@ -23,7 +23,7 @@ const useTaskStore = create((set) => ({
     set({ loading: true });
     try {
       console.log(taskData);
-      const response = await fetch(`http://localhost:4000/todo`, {
+      const response = await fetch(`https://todo-be-rouge.vercel.app/todo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(taskData),
@@ -43,7 +43,7 @@ const useTaskStore = create((set) => ({
   updateTask: async (taskId, updatedData) => {
     set({ loading: true });
     try {
-      const response = await fetch(`http://localhost:4000/todo`, {
+      const response = await fetch(`https://todo-be-rouge.vercel.app/todo`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ taskId: taskId, ...updatedData }),
@@ -64,7 +64,7 @@ const useTaskStore = create((set) => ({
   deleteTask: async (taskId) => {
     set({ loading: true });
     try {
-      await fetch(`http://localhost:4000/todo`, {
+      await fetch(`https://todo-be-rouge.vercel.app/todo`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ taskId: taskId }),
